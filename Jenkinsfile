@@ -7,3 +7,17 @@ env.PATH=env.PATH+":/opt/gradle-6.7/bin:/root/.sdkman/candidates/groovy/3.0.6/bi
 
     stage 'Preparation (Checking out)'
         git url: "https://github.com/RomanOvsyannikov/mntlab-pipeline", branch: 'rovsyannikov'
+
+stage 'Building code'
+        sh 'gradle build'
+
+    stage 'Testing code'
+        parallel (
+                'Unit Tests': {sh 'gradle test' },
+                'Jacoco Tests': {sh 'gradle jacocoTestReport' },
+                'Cucumber Tests': {sh 'gradle cucumber' }
+                )
+
+
+}
+
