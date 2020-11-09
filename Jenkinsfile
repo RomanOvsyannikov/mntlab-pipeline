@@ -27,8 +27,7 @@ node {
 
       stage 'Packing and Publishing results'
          sh "tar -xzf ${child_artifact}"
-         sh "cp build/libs/${JOB_NAME}.jar gradle-simple.jar"
-         sh "tar -zcf ${student}-${BUILD_NUMBER}.tar.gz jobs.groovy Jenkinsfile gradle-simple.jar"
+         sh "tar -zcf ${student}-${BUILD_NUMBER}.tar.gz jobs.groovy Jenkinsfile build/libs/gradle-simple.jar"
          archiveArtifacts "${student}-${BUILD_NUMBER}.tar.gz"
 
       stage 'Asking for manual approval' 
@@ -37,7 +36,7 @@ node {
          }
 
       stage 'Deployment' 
-         sh 'java -jar gradle-simple.jar '
+         sh 'java -jar build/libs/gradle-simple.jar'
 
        stage 'Sending status' 
           sh ' echo "SUCCESS" '
