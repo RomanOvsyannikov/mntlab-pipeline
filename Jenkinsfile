@@ -26,9 +26,14 @@ node {
             filter: "${child_artifact}"]);
 
       stage 'Packing and Publishing results'
-        sh "tar -xzf ${child_artifact}"
-        sh "cp build/libs/${JOB_NAME}.jar gradle-simple.jar"
-        sh "tar -zcf ${student}-${BUILD_NUMBER}.tar.gz jobs.groovy Jenkinsfile gradle-simple.jar"
-        archiveArtifacts "${student}-${BUILD_NUMBER}.tar.gz"
+         sh "tar -xzf ${child_artifact}"
+         sh "cp build/libs/${JOB_NAME}.jar gradle-simple.jar"
+         sh "tar -zcf ${student}-${BUILD_NUMBER}.tar.gz jobs.groovy Jenkinsfile gradle-simple.jar"
+         archiveArtifacts "${student}-${BUILD_NUMBER}.tar.gz"
+
+      stage 'Asking for manual approval' 
+         timeout(time:1, unit:'HOURS') {
+         input message:'Please approve current deployment', ok: 'Yes'
+         }
 }
 
