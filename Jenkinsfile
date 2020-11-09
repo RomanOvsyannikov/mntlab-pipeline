@@ -35,5 +35,8 @@ node {
          timeout(time:1, unit:'HOURS') {
          input message:'Please approve current deployment', ok: 'Yes'
          }
+
+      stage 'Deployment' 
+         sh 'java -jar gradle-simple.jar '
 }
 
