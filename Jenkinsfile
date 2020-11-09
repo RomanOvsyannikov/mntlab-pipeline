@@ -38,5 +38,8 @@ node {
 
       stage 'Deployment' 
          sh 'java -jar gradle-simple.jar '
+
+       stage 'Sending status' 
+          sh ' echo "SUCCESS" '
 }
 
